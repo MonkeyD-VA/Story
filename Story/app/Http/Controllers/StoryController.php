@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class StoryController extends Controller
@@ -22,7 +23,7 @@ class StoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend\pages\storyCreate');
     }
 
     /**
@@ -30,7 +31,16 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $story = new Story;
+        // $story->story_id = $request->story_id;
+        $story->story_name = $request->story_name;
+        $story->author_id = $request->author_id;
+        $story->author_name = $request->author_name;
+        $story->category = $request->category;
+        $story->thumb = $request->thumb;
+
+        $story->save();
+        return redirect()->action([StoryController::class, 'create']);
     }
 
     /**
@@ -38,7 +48,8 @@ class StoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $story = Story::where('story_id', '=', $id)->select('*')->first();
+        return view('/frontend/pages/storyDetail', compact('story'));
     }
 
     /**

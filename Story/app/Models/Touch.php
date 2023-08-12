@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Touch extends Model
 {
     use HasFactory;
+    protected $table = 'touches';
+
 }

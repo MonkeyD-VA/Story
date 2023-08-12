@@ -23,3 +23,9 @@ Route::get('/story', [StoryController::class, 'index']);
 Route::get('/about', function(){
     return view('frontend\pages\about');
 });
+
+Route::get('/story/detail/{id}', [StoryController::class, 'show']);
+
+Route::get('/story/add', [StoryController::class, 'create']);
+
+Route::patch('/story/store', [StoryController::class, 'store']);

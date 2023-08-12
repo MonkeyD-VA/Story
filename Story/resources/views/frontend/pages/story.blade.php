@@ -29,10 +29,24 @@
             background-color: #04AA6D;
             color: white;
         }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font: 1em sans-serif;
+        }
     </style>
 
     <h1>Danh sách Story</h1>
-
+    <button><a href="story/add">Thêm truyện</a></button> <br><br>
     <table id="customers">
         <thead>
             <tr>
@@ -54,7 +68,9 @@
                     <td>{{ $row->author_name }}</td>
                     <td>{{ $row->category }}</td>
                     <td>{{ $row->thumb }}</td>
-                    <td>Edit</td>
+                    <td><span><a href="/story/detail/{{ $row->story_id }}">Details</a></span>|
+                        <span>Delete</span>
+                    </td>
                 </tr>
             @endforeach
 

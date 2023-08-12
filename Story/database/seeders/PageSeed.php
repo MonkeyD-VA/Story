@@ -19,7 +19,8 @@ class PageSeed extends Seeder
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('pages')->insert([
-                'story_id' => $fake->unique()->numerify($string = '##'),
+                'page_number' => $fake->numerify($string = '#'),
+                'story_id' => $fake->numerify($string = '##'),
                 'image_background' => $fake->sentence(20),
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
