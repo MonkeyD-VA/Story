@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('texts', function (Blueprint $table) {
-            $table->id();
+            $table->increments('text_id');
+            $table->string('text_content');
+            $table->integer('audio_id');
+            $table->string('audio_file');
+            $table->string('text_type');
             $table->timestamps();
         });
     }

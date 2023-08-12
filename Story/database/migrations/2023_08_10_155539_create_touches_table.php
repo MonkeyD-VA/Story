@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('touch_id');
             $table->integer('page_id');
             $table->integer('text_id');
-            $table->json('data');
+            $table->string('data');
             $table->timestamps();
         });
     }
