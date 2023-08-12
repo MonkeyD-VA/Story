@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
     return view('frontend\pages\home');
 });
 
-Route::get('/story', function(){
-    return view('frontend\pages\story');
-});
+Route::get('/story', [StoryController::class, 'index']);
 
 Route::get('/about', function(){
     return view('frontend\pages\about');
