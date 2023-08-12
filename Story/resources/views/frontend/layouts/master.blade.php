@@ -37,11 +37,11 @@
 <body>
   <div class="container">
     <div class="topnav">
-      <a class="active" href="#">Home</a>
-      <a href="#">Story</a>
+      <a class="active" href="/">Home</a>
+      <a href="/story">Story</a>
       <a href="#">News</a>
       <a href="#">Contact</a>
-      <a href="#">About</a>
+      <a href="/about">About</a>
     </div>
   </div>
 
