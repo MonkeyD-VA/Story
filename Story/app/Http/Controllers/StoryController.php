@@ -63,16 +63,28 @@ class StoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $story_id)
     {
-        //
+        $story = Story::find($story_id);
+        $story->story_name = $request->story_name;
+        $story->author_id = $request->author_id;
+        $story->author_name = $request->author_name;
+        $story->category = $request->category;
+        $story->thumb = $request->thumb;
+
+        $story->save();
+        return redirect()->action([StoryController::class, 'index']);
+
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $story_id)
     {
-        //
+        $story = Story::find($story_id);
+        $story->delete();
+        return redirect()->action([StoryController::class, 'index'])->with('success','Dữ liệu xóa thành công.');
     }
 }

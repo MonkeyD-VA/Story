@@ -29,3 +29,7 @@ Route::get('/story/detail/{id}', [StoryController::class, 'show']);
 Route::get('/story/add', [StoryController::class, 'create']);
 
 Route::patch('/story/store', [StoryController::class, 'store']);
+
+Route::patch('/story/update/{id}', [StoryController::class, 'update']);
+
+Route::delete('/story/delete/{id}', [StoryController::class, 'destroy']);
