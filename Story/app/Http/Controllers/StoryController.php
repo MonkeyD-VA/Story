@@ -21,13 +21,8 @@ class StoryController extends Controller
      */
     public function index()
     {
-        // $story = DB::table('stories')->select('*')->simplePaginate(10);
-        // $story = $story->get();
         $story = $this->storyRepo->getStory();
         return view('frontend\pages\story', compact('story'));
-        // return response([
-        //     'data'=>$story
-        // ]);
     }
 
     /**
@@ -43,15 +38,7 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
-        $story = new Story;
-        // $story->story_id = $request->story_id;
-        $story->story_name = $request->story_name;
-        $story->author_id = $request->author_id;
-        $story->author_name = $request->author_name;
-        $story->category = $request->category;
-        $story->thumb = $request->thumb;
-
-        $story->save();
+        $story = $this->storyRepo->store($request);
         return redirect()->action([StoryController::class, 'create']);
     }
 
@@ -60,7 +47,7 @@ class StoryController extends Controller
      */
     public function show(string $id)
     {
-        $story = Story::where('story_id', '=', $id)->select('*')->first();
+        $story = $this->storyRepo->show($id);
         return view('/frontend/pages/storyDetail', compact('story'));
     }
 
@@ -77,17 +64,8 @@ class StoryController extends Controller
      */
     public function update(Request $request, string $story_id)
     {
-        $story = Story::find($story_id);
-        $story->story_name = $request->story_name;
-        $story->author_id = $request->author_id;
-        $story->author_name = $request->author_name;
-        $story->category = $request->category;
-        $story->thumb = $request->thumb;
-
-        $story->save();
+        $story = $this->storyRepo->update($request, $story_id);
         return redirect()->action([StoryController::class, 'index']);
-
-
     }
 
     /**
@@ -95,8 +73,7 @@ class StoryController extends Controller
      */
     public function destroy(string $story_id)
     {
-        $story = Story::find($story_id);
-        $story->delete();
+        $story = $this->storyRepo->destroy($story_id);
         return redirect()->action([StoryController::class, 'index'])->with('success','Dữ liệu xóa thành công.');
     }
 }

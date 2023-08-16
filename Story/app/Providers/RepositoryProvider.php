@@ -8,19 +8,22 @@ use App\Repositories\Story\StoryRepositoryInterface;
 
 class RepositoryProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register()
-    {
-      $this->app->bind(StoryRepositoryInterface::class,StoryRepository::class);
-    }
+  /**
+   * Register any application services.
+   */
+  public function register()
+  {
+    $this->app->bind(
+      StoryRepositoryInterface::class,
+      StoryRepository::class
+    );
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
-    }
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    //
+  }
 }

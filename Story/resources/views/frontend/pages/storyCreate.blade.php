@@ -50,9 +50,6 @@
         <form action="/story/store" method='post'>
           @method('PATCH')
           @csrf
-            <label for="story_id">Story ID</label>
-            <input type="text" id="" name="story_id" placeholder="ID story..">
-
             <label for="story_name">Story Name</label>
             <input type="text" id="" name="story_name" placeholder="Name of the Story..">
 

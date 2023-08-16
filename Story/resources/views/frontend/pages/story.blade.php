@@ -69,17 +69,19 @@
                     <td>{{ $row->category }}</td>
                     <td>{{ $row->thumb }}</td>
                     <td><span><a href="/story/detail/{{ $row->story_id }}">Details</a></span>
-                        <span><form action="/story/delete/{{$row->story_id}}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit">Delete</button>
-                        </form></span>
+                        <span>
+                            <form action="/story/delete/{{ $row->story_id }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button type="submit">Delete</button>
+                            </form>
+                        </span>
                     </td>
                 </tr>
             @endforeach
 
-            {{-- {{ $story->links() }} --}}
-            {!! $story->render('pagination::bootstrap-5') !!}
+            {{ $story->links() }}
+
         </tbody>
 
 
