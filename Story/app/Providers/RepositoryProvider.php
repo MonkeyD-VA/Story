@@ -1,20 +1,19 @@
 <?php
 
 namespace App\Providers;
-
+// namespace App\Repositories\Story;
+use Illuminate\Support\ServiceProvider;
 use App\Repositories\Story\StoryRepository;
 use App\Repositories\Story\StoryRepositoryInterface;
-use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class RepositoryProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
+    public function register()
     {
-        $this->app->bind(StoryRepositoryInterface::class,StoryRepository::class);
-        
+      $this->app->bind(StoryRepositoryInterface::class,StoryRepository::class);
     }
 
     /**

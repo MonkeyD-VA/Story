@@ -3,19 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Story;
+use App\Repositories\Story\StoryRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class StoryController extends Controller
 {
+
+    protected $storyRepo;
+
+    public function __construct(StoryRepositoryInterface $storyRepo)
+    {
+        $this->storyRepo = $storyRepo;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $story = DB::table('stories')->select('*')->simplePaginate(10);
+        // $story = DB::table('stories')->select('*')->simplePaginate(10);
         // $story = $story->get();
-
+        $story = $this->storyRepo->getStory();
         return view('frontend\pages\story', compact('story'));
+        // return response([
+        //     'data'=>$story
+        // ]);
     }
 
     /**

@@ -78,7 +78,8 @@
                 </tr>
             @endforeach
 
-            {{ $story->links() }}
+            {{-- {{ $story->links() }} --}}
+            {!! $story->render('pagination::bootstrap-5') !!}
         </tbody>
 
 
