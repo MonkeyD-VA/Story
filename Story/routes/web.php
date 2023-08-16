@@ -14,22 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
+Route::get('/', function () {
     return view('frontend\pages\home');
 });
 
 Route::get('/story', [StoryController::class, 'index']);
 
-Route::get('/about', function(){
+Route::get('/about', function () {
     return view('frontend\pages\about');
 });
 
-Route::get('/story/detail/{id}', [StoryController::class, 'show']);
+Route::prefix('story')->group(function () {
+    Route::get('/detail/{id}', [StoryController::class, 'show']);
 
-Route::get('/story/add', [StoryController::class, 'create']);
+    Route::get('add', [StoryController::class, 'create']);
 
-Route::patch('/story/store', [StoryController::class, 'store']);
+    Route::patch('/store', [StoryController::class, 'store']);
 
-Route::patch('/story/update/{id}', [StoryController::class, 'update']);
+    Route::patch('/update/{id}', [StoryController::class, 'update']);
 
-Route::delete('/story/delete/{id}', [StoryController::class, 'destroy']);
+    Route::delete('/delete/{id}', [StoryController::class, 'destroy']);
+});
