@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\StoryController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,23 +16,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('frontend\pages\home');
+    return view('welcome');
 });
 
-Route::get('/story', [StoryController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/about', function () {
-    return view('frontend\pages\about');
+Route::get('/home', [Controller::class, 'index']);
+
+Route::get('post', [Controller::class, 'post'])->middleware(['auth', 'admin']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('story')->group(function () {
-    Route::get('/detail/{id}', [StoryController::class, 'show']);
-
-    Route::get('add', [StoryController::class, 'create']);
-
-    Route::patch('/store', [StoryController::class, 'store']);
-
-    Route::patch('/update/{id}', [StoryController::class, 'update']);
-
-    Route::delete('/delete/{id}', [StoryController::class, 'destroy']);
-});
+require __DIR__.'/auth.php';

@@ -5,8 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Auth;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    public function index() {
+        if(Auth::id()) {
+            $usertype = Auth()->user()->usertype;
+
+            if($usertype == 'user') {
+                return "This is user";
+            }
+            else if ($usertype == 'admin') {
+                return "This is admin";
+            }
+        }
+    }
+
+    public function post() {
+        return "This is post page";
+    }
 }

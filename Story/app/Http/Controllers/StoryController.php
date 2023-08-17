@@ -23,6 +23,7 @@ class StoryController extends Controller
     {
         $story = $this->storyRepo->getStory();
         return view('frontend\pages\story', compact('story'));
+        // return $story;
     }
 
     /**
