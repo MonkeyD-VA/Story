@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\StoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,5 @@ Route::prefix('story')->group(function () {
 
     Route::delete('/delete/{id}', [StoryController::class, 'destroy']);
 });
+
+Route::post('api/auth/login', [LoginController::class, 'login'])->name('api.auth.login');
