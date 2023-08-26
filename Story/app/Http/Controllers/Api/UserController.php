@@ -7,11 +7,33 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index() {
+
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'admin'])->only('adminAction');
+        $this->middleware(['auth:sanctum', 'user'])->only('userAction');
+    }
+
+    public function adminAction()
+    {
+        // Xử lý khi đây là admin
+        return "admin action";
+    }
+
+    public function userAction()
+    {
+        // Xử lý khi đây là người dùng
+
+        return "user action";
+    }
+
+    public function index()
+    {
         return response()->json([
             'data' => User::all(),
         ]);
@@ -26,14 +48,16 @@ class UserController extends Controller
     {
         try {
             //Validated
-            $validateUser = Validator::make($request->all(), 
-            [
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users,email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -47,12 +71,14 @@ class UserController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
+            //logging action
+            Log::info('Create a user');
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -69,13 +95,15 @@ class UserController extends Controller
     public function loginUser(Request $request)
     {
         try {
-            $validateUser = Validator::make($request->all(), 
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+            $validateUser = Validator::make(
+                $request->all(),
+                [
+                    'email' => 'required|email',
+                    'password' => 'required'
+                ]
+            );
 
-            if($validateUser->fails()){
+            if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
@@ -83,7 +111,7 @@ class UserController extends Controller
                 ], 401);
             }
 
-            if(!Auth::attempt($request->only(['email', 'password']))){
+            if (!Auth::attempt($request->only(['email', 'password']))) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
@@ -92,13 +120,15 @@ class UserController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
+            //logging action
+            Log::info('User login');
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
                 'user' => $user,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN", ['server:user'])->plainTextToken
             ], 200);
-
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -106,4 +136,9 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    // public function logout() {
+    //     $request->user()->currentAccessToken()->delete();
+    //     return "deleted token";
+    // }
 }

@@ -15,4 +15,6 @@ interface StoryRepositoryInterface
     public function update(Request $request, string $story_id);
 
     public function destroy(string $story_id);
+
+    public function findPage(Request $request, string $story_id);
 }

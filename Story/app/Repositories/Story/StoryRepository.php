@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Story;
 
+use App\Models\Page;
 use App\Models\Story;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Story\StoryRepositoryInterface;
@@ -57,5 +58,13 @@ class StoryRepository implements StoryRepositoryInterface
     {
         $story = Story::find($story_id);
         $story->delete();
+    }
+
+    public function findPage(Request $request, string $story_id)
+    {
+        $page = DB::table('pages')
+            ->where('story_id', '=', $story_id)
+            ->get();
+        return $page;
     }
 }

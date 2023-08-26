@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\StoryController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,16 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'index']);
+    Route::get('story/detail/{id}', [StoryController::class, 'show']);
+    Route::patch('story/update/{id}', [StoryController::class, 'update']);
+    Route::get('findPage/{id}', [StoryController::class, 'findPage']);
 });
+
+Route::middleware('admin')->group(function(){
+    Route::get('getUser', function(){
+        return "has get user from token";
+    });
+});
+
+
+Route::get('logout', [UserController::class, 'logout']);
