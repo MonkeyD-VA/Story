@@ -1,0 +1,25 @@
+<h1>Story list</h1>
+
+<table id="customers">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Story name</th>
+      <th>Author</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody >
+      <tr *ngFor="let story of stories">
+        <td> {{story.id}}</td>
+        <td> <a href="abc.com" [routerLink]="['/story', story.id]">{{story.name}}</a></td>
+        <td>{{story.author}}</td>
+        <td><a [routerLink]="['/story', story.id]">Edit</a></td>
+      </tr>
+
+
+
+  </tbody>
+
+
+</table>

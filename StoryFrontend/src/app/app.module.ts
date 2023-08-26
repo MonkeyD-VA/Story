@@ -7,15 +7,19 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoryListComponent } from './pages/components/story-list/story-list.component';
 
 import { MaterialModule } from './material.module';
+import { StoryDetailComponent } from './pages/components/story-detail/story-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    StoryListComponent,
+    StoryDetailComponent
   ],
   imports: [
     BrowserModule,
