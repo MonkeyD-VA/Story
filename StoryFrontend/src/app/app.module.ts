@@ -11,6 +11,7 @@ import { StoryListComponent } from './pages/components/story-list/story-list.com
 
 import { MaterialModule } from './material.module';
 import { StoryDetailComponent } from './pages/components/story-detail/story-detail.component';
+import { StoryCreateComponent } from './pages/components/story-create/story-create.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { StoryDetailComponent } from './pages/components/story-detail/story-deta
     HomeComponent,
     LoginComponent,
     StoryListComponent,
-    StoryDetailComponent
+    StoryDetailComponent,
+    StoryCreateComponent
   ],
   imports: [
     BrowserModule,
