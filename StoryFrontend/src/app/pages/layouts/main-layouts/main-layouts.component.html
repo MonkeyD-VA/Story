@@ -1,8 +1,11 @@
-<app-header></app-header>
+<div>
+  <app-header></app-header>
+</div>
 <mat-drawer-container class="h-full" autosize>
-  <mat-drawer #drawer class="p-5 w-1/6" mode="side">
+  <mat-drawer #drawer class="p-5 w-1/6 fixed" mode="side">
     <app-sidebar></app-sidebar>
   </mat-drawer>
-
-  <router-outlet></router-outlet>
+  <div class="p-5">
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>
