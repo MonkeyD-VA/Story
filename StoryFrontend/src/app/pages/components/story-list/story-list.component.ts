@@ -1,41 +1,37 @@
-import {AfterViewInit, Component, ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { stories, Story } from '../../story';
+import { ConfigService } from 'src/app/config/config.service';
 
 @Component({
   selector: 'app-story-list',
   templateUrl: './story-list.component.html',
   styleUrls: ['./story-list.component.css']
 })
-export class StoryListComponent implements AfterViewInit {
-  stories = [...stories];
-  displayedColumns: string[] = ['id', 'name', 'author'];
-  dataSource: MatTableDataSource<Story>;
+export class StoryListComponent implements AfterViewInit, OnInit {
+  displayedColumns: string[] = ['id', 'thumb', 'name', 'author', 'authorId', 'category'];
+  dataSource: MatTableDataSource<any>;
 
-  @ViewChild(MatPaginator) paginator:any = MatPaginator;
-  @ViewChild(MatSort) sort:any = MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() {
+  constructor(
+    private config: ConfigService
+  ) {
     // Assign the data to the data source for the table to render
-    
-    this.dataSource = new MatTableDataSource(stories);
+    this.dataSource = new MatTableDataSource();
+  }
+
+  ngOnInit(): void {
+    this.config.getStories().subscribe((response) => {
+      this.dataSource = response.stories;
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-}
+};
