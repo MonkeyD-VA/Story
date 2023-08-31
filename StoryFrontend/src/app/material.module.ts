@@ -10,6 +10,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 const modules = [
   MatSlideToggleModule,
@@ -21,7 +22,8 @@ const modules = [
   MatSortModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatIconModule
+  MatIconModule,
+  MatButtonModule
 ];
 
 @NgModule({

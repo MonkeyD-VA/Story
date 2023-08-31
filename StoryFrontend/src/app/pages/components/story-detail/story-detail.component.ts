@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Story, stories } from '../../story';
+import { ConfigService } from 'src/app/config/config.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-story-detail',
@@ -8,21 +10,29 @@ import { Story, stories } from '../../story';
   styleUrls: ['./story-detail.component.css']
 })
 export class StoryDetailComponent {
-  story: Story | undefined;
-
+  story: any | undefined;
+  stories: any | undefined;
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private config: ConfigService,
+    private location: Location
   ){}
 
   ngOnInit() {
-    //get the story id from current route
-    const routeParams = this.route.snapshot.paramMap;
-    const storyIdFromRoute = Number(routeParams.get('id'));
 
-    //find the story that correspond with the id in route
-    this.story = stories.find(story => story.id === storyIdFromRoute);
+    this.config.getStories().subscribe((response) => {
+      this.stories = response.stories;
 
+      //get the story id from current route
+      const routeParams = this.route.snapshot.paramMap;
+      const storyIdFromRoute = Number(routeParams.get('id'));
+
+      //find the story that correspond with the id in route
+      this.story = this.stories.find((story:any) => story.story_id === storyIdFromRoute);
+    });
   }
 
-
+  goBack(): void {
+    this.location.back();
+  }
 }

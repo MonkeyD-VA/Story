@@ -1,8 +1,10 @@
-<h1>Story Detail</h1>
+<button mat-raised-button (click)="goBack()"><mat-icon>arrow_back</mat-icon> Back </button>
+<h1 class="pt-4">Story Detail</h1>
+
 
 <div *ngIf="story">
-  <h3>{{story.name}}</h3>
-  <p>ID: {{story.id}}</p>
-  <p>Author: {{story.author}}</p>
+  <h3>{{story.story_name}}</h3>
+  <p>ID: {{story.story_id}}</p>
+  <p>Author: {{story.author_name}}</p>
 
 </div>

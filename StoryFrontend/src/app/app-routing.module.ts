@@ -18,7 +18,8 @@ const routes: Routes = [
     component: MainLayoutsComponent,
     children: [
       {path: 'dashboard', component: StoryListComponent},
-      // {path: 'setting',}
+      {path: 'story/detail/:id', component: StoryDetailComponent},
+      {path: 'story/create', component: StoryCreateComponent},
     ]
   },
 
