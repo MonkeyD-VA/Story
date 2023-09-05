@@ -5,6 +5,7 @@ import { StoryDetailComponent } from './pages/components/story-detail/story-deta
 import { StoryCreateComponent } from './pages/components/story-create/story-create.component';
 import { MainLayoutsComponent } from './pages/layouts/main-layouts/main-layouts.component';
 import { StoryListComponent } from './pages/components/story-list/story-list.component';
+import { PageConfigComponent } from './pages/components/page-config/page-config.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path: 'dashboard', component: StoryListComponent},
       {path: 'story/detail/:id', component: StoryDetailComponent},
       {path: 'story/create', component: StoryCreateComponent},
+      {path: 'story/configPage/:id', component: PageConfigComponent},
     ]
   },
 

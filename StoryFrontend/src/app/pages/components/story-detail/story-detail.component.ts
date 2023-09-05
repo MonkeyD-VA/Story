@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Story, stories } from '../../story';
-import { ConfigService } from 'src/app/config/config.service';
 import { Location } from '@angular/common';
+import { StoryService } from 'src/app/core/services/story.service';
+import { PageService } from 'src/app/core/services/page.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-story-detail',
@@ -11,25 +13,45 @@ import { Location } from '@angular/common';
 })
 export class StoryDetailComponent {
   story: any | undefined;
-  stories: any | undefined;
+  pages: any | undefined;
+
+  displayedColumns: string[] = ['number', 'content', 'background', 'config'];
+  dataSource = new MatTableDataSource<any>();
+
   constructor(
     private route: ActivatedRoute,
-    private config: ConfigService,
-    private location: Location
-  ){}
+    private storyService: StoryService,
+    private location: Location,
+    private pageService: PageService
+  ) { }
 
   ngOnInit() {
 
-    this.config.getStories().subscribe((response) => {
-      this.stories = response.stories;
+    //get the story id from current route
+    const routeParams = this.route.snapshot.paramMap;
+    const storyIdFromRoute = Number(routeParams.get('id'));
 
-      //get the story id from current route
-      const routeParams = this.route.snapshot.paramMap;
-      const storyIdFromRoute = Number(routeParams.get('id'));
+    this.storyService.getStories().subscribe((response) => {
+      this.story = response.stories;
 
       //find the story that correspond with the id in route
-      this.story = this.stories.find((story:any) => story.story_id === storyIdFromRoute);
+      this.story = this.story.find((story: any) => story.story_id === storyIdFromRoute);
     });
+
+    this.pageService.getPages().subscribe((response) => {
+      this.pages = response;
+
+      //find the page that correspond with the story
+      this.pages = this.pages.filter((page: any) => page.story_id === storyIdFromRoute);
+      //sort follow the page_number
+      this.pages.sort((a: any, b: any) => a.page_number - b.page_number);
+      
+      this.dataSource.data = this.pages;
+
+    });
+
+    
+    
   }
 
   goBack(): void {

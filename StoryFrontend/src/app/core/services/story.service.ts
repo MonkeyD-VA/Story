@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfigService {
+export class StoryService {
 
   constructor(
     private http: HttpClient
@@ -16,5 +16,4 @@ export class ConfigService {
   getStories(): Observable<any> {
     return this.http.get<any>(this.url);
   }
-
 }

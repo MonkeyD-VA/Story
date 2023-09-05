@@ -16,6 +16,7 @@ import { SidebarComponent } from './pages/layouts/sidebar/sidebar.component';
 import { HeaderComponent } from './pages/layouts/header/header.component';
 import { FooterComponent } from './pages/layouts/footer/footer.component';
 import { MainLayoutsComponent } from './pages/layouts/main-layouts/main-layouts.component';
+import { PageConfigComponent } from './pages/components/page-config/page-config.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MainLayoutsComponent } from './pages/layouts/main-layouts/main-layouts.
     SidebarComponent,
     HeaderComponent,
     FooterComponent,
-    MainLayoutsComponent
+    MainLayoutsComponent,
+    PageConfigComponent
   ],
   imports: [
     BrowserModule,

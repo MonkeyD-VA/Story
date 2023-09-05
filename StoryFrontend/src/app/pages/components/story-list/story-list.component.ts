@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { ConfigService } from 'src/app/config/config.service';
+import { StoryService } from 'src/app/core/services/story.service';
 
 @Component({
   selector: 'app-story-list',
@@ -18,7 +18,7 @@ export class StoryListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private config: ConfigService
+    private service: StoryService
   ) { }
 
   ngAfterViewInit() {
@@ -27,7 +27,7 @@ export class StoryListComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.config.getStories().subscribe((response) => {
+    this.service.getStories().subscribe((response) => {
       this.dataSource.data = response.stories;
     });
   }
