@@ -7,9 +7,18 @@
     <ng-template mat-tab-label>
       {{ link }}
     </ng-template>
-    <div class="tab-content">
+    <div class="flex flex-row">
       <!-- Your content for this tab goes here -->
-      <img [src]="pages[links.indexOf(link)].img_background" >
-    </div>
+      <div class="flex-initial w-5/6">
+        <app-canvas [imageSource]="pages[links.indexOf(link)].img_background"></app-canvas>
+      </div>
+      <div class="flex-initial w-1/6 flex flex-col items-start">
+        <div class="font-medium my-3 text-xl">Config action</div>
+        <button mat-raised-button color="primary" class="m-1" (click)="addRect()">Add</button>
+        <button mat-raised-button class="m-1">Undo</button>
+        <button mat-raised-button color="warn" class="m-1">Clear</button>
+      </div>
+      
+    </div> 
   </mat-tab>
 </mat-tab-group>

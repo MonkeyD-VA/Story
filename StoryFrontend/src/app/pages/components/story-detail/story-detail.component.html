@@ -2,7 +2,7 @@
   <button mat-raised-button (click)="goBack()"><mat-icon>arrow_back</mat-icon> Back </button>
   <h1 class="pt-4 relative left-7">{{story.category}}: {{story.story_name}}</h1>
   <span class="flex-auto"></span>
-  <button mat-raised-button color="primary"><mat-icon fontIcon="settings"></mat-icon>Config</button>
+  <a mat-raised-button color="primary" routerLink="/story/config"><mat-icon fontIcon="settings"></mat-icon>Config</a>
   <a mat-raised-button color="accent" class="ml-3" [routerLink]="['/story/configPage', story.story_id]" ><mat-icon fontIcon="library_books"></mat-icon> Config page</a>
 </div>
 

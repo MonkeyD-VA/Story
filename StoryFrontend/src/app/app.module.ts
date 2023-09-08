@@ -17,6 +17,8 @@ import { HeaderComponent } from './pages/layouts/header/header.component';
 import { FooterComponent } from './pages/layouts/footer/footer.component';
 import { MainLayoutsComponent } from './pages/layouts/main-layouts/main-layouts.component';
 import { PageConfigComponent } from './pages/components/page-config/page-config.component';
+import { StoryConfigComponent } from './pages/components/story-config/story-config.component';
+import { CanvasComponent } from './pages/components/canvas/canvas.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { PageConfigComponent } from './pages/components/page-config/page-config.
     HeaderComponent,
     FooterComponent,
     MainLayoutsComponent,
-    PageConfigComponent
+    PageConfigComponent,
+    StoryConfigComponent,
+    CanvasComponent
   ],
   imports: [
     BrowserModule,

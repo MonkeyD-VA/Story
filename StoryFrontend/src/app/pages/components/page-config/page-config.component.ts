@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CanvasService } from 'src/app/core/services/canvas.service';
 import { PageService } from 'src/app/core/services/page.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class PageConfigComponent {
   constructor(
     private pageService: PageService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private canvasService: CanvasService,
   ) { }
 
   ngOnInit() {
@@ -49,5 +51,9 @@ export class PageConfigComponent {
 
   addLink() {
     this.links.push(`Page ${this.links.length + 1}`);
+  }
+
+  addRect(){
+    this.canvasService.addRect();
   }
 }
