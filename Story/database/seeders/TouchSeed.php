@@ -19,9 +19,10 @@ class TouchSeed extends Seeder
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('touches')->insert([
+                'touch_id' => $i + 1,
                 'page_id' => $fake->unique()->numerify($string='##'),
                 'text_id' => $fake->unique()->numerify($string = '##'),
-                'data' => $fake->sentence,
+                'position' => $fake->json,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             ]);

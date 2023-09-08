@@ -18,6 +18,23 @@ class StoryController extends Controller
         $this->storyRepo = $storyRepo;
     }
 
+    public function index()
+    {
+        
+        Log::info('User has get list of story');
+        try {
+            $story = $this->storyRepo->getStory();
+            return response()->json([
+                'status' => true,
+                'data' => $story
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
 
     public function show(string $id)
     {   

@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pages', function (Blueprint $table) {
-            $table->increments('page_number');
-            $table->integer('story_id');
+            $table->unsignedBigInteger('page_id')->primary();
+            $table->integer('page_number');
+            $table->unsignedBigInteger('story_id');
             $table->string('image_background');
             $table->timestamps();
+        });
+
+        // Define foreign key constraint
+        Schema::table('pages', function (Blueprint $table) {
+            $table->foreign('story_id')->references('story_id')->on('stories')->onDelete('cascade');
         });
     }
 

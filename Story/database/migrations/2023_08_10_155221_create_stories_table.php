@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stories', function (Blueprint $table) {
-            $table->increments('story_id');
+            $table->unsignedBigInteger('story_id')->primary();
             $table->string('story_name');
-            $table->integer('author_id')->unique();
+            $table->unsignedBigInteger('author_id');
             $table->string('author_name');
             $table->string('category');
             $table->string('thumb');
-            $table->timestamps();
+            $table->timestamps(); // created_at and updated_at columns
         });
     }
 

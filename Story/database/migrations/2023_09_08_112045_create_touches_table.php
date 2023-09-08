@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('text_configs', function (Blueprint $table) {
-            $table->unsignedBigInteger('text_id');
+        Schema::create('touches', function (Blueprint $table) {
+            $table->unsignedBigInteger('touch_id')->primary();
             $table->unsignedBigInteger('page_id');
+            $table->unsignedBigInteger('text_id');
             $table->json('position');
             $table->timestamps();
         });
 
         // Define foreign key constraint
-        Schema::table('text_configs', function (Blueprint $table) {
-            $table->foreign('text_id')->references('text_id')->on('texts')->onDelete('cascade');
+        Schema::table('touches', function (Blueprint $table) {
             $table->foreign('page_id')->references('page_id')->on('pages')->onDelete('cascade');
+            $table->foreign('text_id')->references('text_id')->on('texts')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('text_configs');
+        Schema::dropIfExists('touches');
     }
 };

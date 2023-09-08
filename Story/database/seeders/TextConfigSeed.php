@@ -21,7 +21,8 @@ class TextConfigSeed extends Seeder
             DB::table('text_configs')->insert([
                 'text_id' => $fake->unique()->numerify($string = '##'),
                 'page_id' => $fake->unique()->numerify($string = '##'),
-                'position' => $fake->sentence,
+                'position' => $fake->json,
+                'type' => $fake->randomLetter(),
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             ]);
