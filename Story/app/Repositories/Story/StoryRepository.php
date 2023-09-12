@@ -2,8 +2,6 @@
 
 namespace App\Repositories\Story;
 
-use App\Models\Page;
-use App\Models\Story;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Story\StoryRepositoryInterface;

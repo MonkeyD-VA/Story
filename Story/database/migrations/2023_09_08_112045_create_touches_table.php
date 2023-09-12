@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('touches', function (Blueprint $table) {
-            $table->unsignedBigInteger('touch_id')->primary();
+            $table->bigIncrements('touch_id');
             $table->unsignedBigInteger('page_id');
             $table->unsignedBigInteger('text_id');
             $table->json('position');

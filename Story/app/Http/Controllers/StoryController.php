@@ -11,18 +11,18 @@ use Ramsey\Uuid\Type\Integer;
 
 class StoryController extends Controller
 {
-    protected $storyRepo;
+    protected $repo;
 
-    public function __construct(StoryRepositoryInterface $storyRepo)
+    public function __construct(StoryRepositoryInterface $repo)
     {
-        $this->storyRepo = $storyRepo;
+        $this->repo = $repo;
     }
 
     public function index()
     {
         Log::info('User has get list of story');
         try {
-            $story = $this->storyRepo->getAll();
+            $story = $this->repo->getAll();
             return response()->json([
                 'status' => true,
                 'data' => $story
@@ -39,7 +39,7 @@ class StoryController extends Controller
     {
         Log::info("API: show a detail story");
         try {
-            $story = $this->storyRepo->show($id);
+            $story = $this->repo->show($id);
             return response()->json([
                 'status' => true,
                 'data' => $story
@@ -54,7 +54,7 @@ class StoryController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->storyRepo->getDataRequest($request) ;
+        $data = $this->repo->getDataRequest($request) ;
         
         try {
             //Validated
@@ -77,7 +77,7 @@ class StoryController extends Controller
                 ], 401);
             }
 
-            $story = $this->storyRepo->store($data);
+            $story = $this->repo->store($data);
             return response()->json([
                 'status' => true,
                 'message' => 'Store Successfully',
@@ -92,7 +92,7 @@ class StoryController extends Controller
 
     public function update(Request $request, string $story_id)
     {
-        $data = $this->storyRepo->getDataRequest($request) ;
+        $data = $this->repo->getDataRequest($request) ;
         Log::info("API: update a story");
         try {
             //Validated
@@ -115,7 +115,7 @@ class StoryController extends Controller
                 ], 401);
             }
 
-            $story = $this->storyRepo->update($story_id, $data);
+            $story = $this->repo->update($story_id, $data);
 
             return response()->json([
                 'status' => true,
@@ -132,7 +132,7 @@ class StoryController extends Controller
     public function destroy(string $story_id)
     {
         try {
-            $story = $this->storyRepo->destroy($story_id);
+            $story = $this->repo->destroy($story_id);
             return response()->json([
                 'status' => true,
                 'message' => 'Destroy Successfully',
@@ -147,7 +147,7 @@ class StoryController extends Controller
 
     public function findPage(Request $request, $story_id)
     {
-        // $pages = $this->storyRepo->findPage($request, $story_id);
+        // $pages = $this->repo->findPage($request, $story_id);
         // Log::info("API: find pages of a story");
         // return response()->json([
         //     'status' => true,

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pages', function (Blueprint $table) {
-            $table->unsignedBigInteger('page_id')->primary();
+            $table->bigIncrements('page_id');
             $table->integer('page_number');
             $table->unsignedBigInteger('story_id');
             $table->string('image_background');

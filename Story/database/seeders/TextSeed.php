@@ -19,7 +19,6 @@ class TextSeed extends Seeder
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('texts')->insert([
-                'text_id' => $i + 1,
                 'text_content' => $fake->sentence,
                 'audio_id' => $fake->unique()->numerify($string = '##'),
                 'audio_file' => $fake->sentence,

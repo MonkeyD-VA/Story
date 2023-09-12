@@ -32,7 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('page')->group(function () {
         Route::get('/', [PageController::class, 'index']);
-        Route::get('story/{id}', PageController::class, '');
+        // Route::get('story/{id}', PageController::class, 'findByStoryId');
     });
 
 });

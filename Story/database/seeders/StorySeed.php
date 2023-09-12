@@ -16,7 +16,7 @@ class StorySeed extends Seeder
     public function run(): void
     {
         $fake  = Faker\Factory::create();
-        $limit = 70;
+        $limit = 99;
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('stories')->insert([

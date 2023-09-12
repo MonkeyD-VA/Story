@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('texts', function (Blueprint $table) {
-            $table->unsignedBigInteger('text_id')->primary();
+            $table->bigIncrements('text_id');
             $table->text('text_content');
             $table->unsignedBigInteger('audio_id');
             $table->string('audio_file');
