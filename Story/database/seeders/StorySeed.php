@@ -20,7 +20,6 @@ class StorySeed extends Seeder
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('stories')->insert([
-                'story_id' => $i + 1,
                 'story_name' => $fake->name,
                 'author_id' => $fake->unique()->numerify($string = '###'),
                 'author_name' => $fake->name,

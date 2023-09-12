@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Story;
+use App\Http\Controllers\Controller;
 use App\Repositories\Story\StoryRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Type\Integer;
 
 class StoryController extends Controller
 {
-
     protected $storyRepo;
 
     public function __construct(StoryRepositoryInterface $storyRepo)
@@ -18,70 +18,140 @@ class StoryController extends Controller
         $this->storyRepo = $storyRepo;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $story = $this->storyRepo->getStory();
         Log::info('User has get list of story');
-        return view('frontend\pages\story', compact('story'));
+        try {
+            $story = $this->storyRepo->getAll();
+            return response()->json([
+                'status' => true,
+                'data' => $story
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        Log::info('User is going to create a new story');
-        return view('frontend\pages\storyCreate');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $story = $this->storyRepo->store($request);
-        Log::info('User has created a new story');
-        return redirect()->action([StoryController::class, 'create']);
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $story = $this->storyRepo->show($id);
-        Log::info('User view a detail story');
-        return view('/frontend/pages/storyDetail', compact('story'));
+        Log::info("API: show a detail story");
+        try {
+            $story = $this->storyRepo->show($id);
+            return response()->json([
+                'status' => true,
+                'data' => $story
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function store(Request $request)
     {
-        //
+        $data = $this->storyRepo->getDataRequest($request) ;
+        
+        try {
+            //Validated
+            $validate = Validator::make(
+                $data,
+                [
+                    'story_name' => 'string',
+                    'author_id' => 'numeric',
+                    'author_name' => 'string',
+                    'category' => 'string',
+                    'thumb' => 'string'
+                ]
+            );
+
+            if ($validate->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validate->errors()
+                ], 401);
+            }
+
+            $story = $this->storyRepo->store($data);
+            return response()->json([
+                'status' => true,
+                'message' => 'Store Successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $story_id)
     {
-        $story = $this->storyRepo->update($request, $story_id);
-        Log::info('User has update a story');
-        return redirect()->action([StoryController::class, 'index']);
+        $data = $this->storyRepo->getDataRequest($request) ;
+        Log::info("API: update a story");
+        try {
+            //Validated
+            $validate = Validator::make(
+                $data,
+                [
+                    'story_name' => 'string',
+                    'author_id' => 'numeric',
+                    'author_name' => 'string',
+                    'category' => 'string',
+                    'thumb' => 'string'
+                ]
+            );
+
+            if ($validate->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validate->errors()
+                ], 401);
+            }
+
+            $story = $this->storyRepo->update($story_id, $data);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Update Successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $story_id)
     {
-        $story = $this->storyRepo->destroy($story_id);
-        Log::info('User destroy a story');
-        return redirect()->action([StoryController::class, 'index'])->with('success','Dữ liệu xóa thành công.');
+        try {
+            $story = $this->storyRepo->destroy($story_id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Destroy Successfully',
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function findPage(Request $request, $story_id)
+    {
+        // $pages = $this->storyRepo->findPage($request, $story_id);
+        // Log::info("API: find pages of a story");
+        // return response()->json([
+        //     'status' => true,
+        //     'data' => $pages,
+        // ], 200);
     }
 }

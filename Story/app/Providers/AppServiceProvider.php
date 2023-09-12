@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(StoryRepositoryInterface::class,StoryRepository::class);
+        $this->app->bind(
+            StoryRepositoryInterface::class,
+            StoryRepository::class,
+        );
         
     }
 
