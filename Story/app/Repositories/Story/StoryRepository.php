@@ -16,11 +16,10 @@ class StoryRepository extends BaseRepository implements StoryRepositoryInterface
     }
 
 
-    public function findPage(Request $request, $story_id)
+    public function findPage($story_id)
     {
-        $page = DB::table('pages')
-            ->where('story_id', '=', $story_id)
-            ->get();
+        $story = $this->show($story_id);
+        $page = $story->pages()->get();
         return $page;
     }
 }

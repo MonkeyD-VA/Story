@@ -13,4 +13,8 @@ class PageRepository extends BaseRepository implements PageRepositoryInterface
         return \App\Models\Page::class;
     }
 
+    public function getPageByStory($id) {
+        return $this->model->where('story_id', $id)->get();
+    }
+
 }

@@ -27,7 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('store', [StoryController::class, 'store']);
         Route::patch('update/{id}', [StoryController::class, 'update']);
         Route::delete('delete/{id}', [StoryController::class, 'destroy']);
-        //Route::get('findPage/{id}', [StoryController::class, 'findPage']);
+        Route::get('pageOf/{id}', [StoryController::class, 'findPage']);
     });
 
     Route::prefix('page')->group(function () {

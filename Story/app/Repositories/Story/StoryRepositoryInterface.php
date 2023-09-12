@@ -6,4 +6,5 @@ use Illuminate\Http\Request;
 
 interface StoryRepositoryInterface extends RepositoryInterface
 {
+  public function findPage($id);
 }

@@ -145,13 +145,13 @@ class StoryController extends Controller
         }
     }
 
-    public function findPage(Request $request, $story_id)
+    public function findPage($story_id)
     {
-        // $pages = $this->repo->findPage($request, $story_id);
-        // Log::info("API: find pages of a story");
-        // return response()->json([
-        //     'status' => true,
-        //     'data' => $pages,
-        // ], 200);
+        $pages = $this->repo->findPage($story_id);
+        Log::info("API: find pages of a story");
+        return response()->json([
+            'status' => true,
+            'data' => $pages,
+        ], 200);
     }
 }
