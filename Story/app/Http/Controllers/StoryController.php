@@ -155,3 +155,8 @@ class StoryController extends Controller
         ], 200);
     }
 }
+
+
+// ruts gon: goto next, function to return same format
+// add to repo
+// pagination
