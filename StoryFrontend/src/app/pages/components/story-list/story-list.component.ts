@@ -29,6 +29,7 @@ export class StoryListComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.service.getStories().subscribe((response) => {
       this.dataSource.data = response.stories;
+     
     });
   }
 

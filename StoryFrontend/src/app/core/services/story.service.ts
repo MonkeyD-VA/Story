@@ -12,6 +12,7 @@ export class StoryService {
   ) { }
 
   private url = './assets/data/stories.json';
+  // private url = 'http://127.0.0.1:8000/api/story';
 
   getStories(): Observable<any> {
     return this.http.get<any>(this.url);

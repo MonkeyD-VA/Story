@@ -5,10 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CanvasService {
 
-  private rectangles: any[] = [];
-
-  constructor() { }
-
-  addRect() {
+  constructor() {
   }
+
 }

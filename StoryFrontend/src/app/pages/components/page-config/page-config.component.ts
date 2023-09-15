@@ -1,8 +1,11 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CanvasService } from 'src/app/core/services/canvas.service';
 import { PageService } from 'src/app/core/services/page.service';
+import { CanvasComponent } from '../canvas/canvas.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateTouchDialogComponent } from '../create-touch-dialog/create-touch-dialog.component';
 
 @Component({
   selector: 'app-page-config',
@@ -18,8 +21,10 @@ export class PageConfigComponent {
     private pageService: PageService,
     private location: Location,
     private route: ActivatedRoute,
-    private canvasService: CanvasService,
+    public dialog: MatDialog
   ) { }
+
+  @ViewChild('myCanvas') canvasComponent!: CanvasComponent;
 
   ngOnInit() {
 
@@ -53,7 +58,12 @@ export class PageConfigComponent {
     this.links.push(`Page ${this.links.length + 1}`);
   }
 
-  addRect(){
-    this.canvasService.addRect();
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateTouchDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
+
 }

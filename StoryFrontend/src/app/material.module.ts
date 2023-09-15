@@ -12,6 +12,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const modules = [
   MatSlideToggleModule,
@@ -25,7 +28,10 @@ const modules = [
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
-  MatTabsModule
+  MatTabsModule,
+  MatAutocompleteModule,
+  MatListModule,
+  MatDialogModule
 ];
 
 @NgModule({

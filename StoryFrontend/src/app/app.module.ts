@@ -19,6 +19,7 @@ import { MainLayoutsComponent } from './pages/layouts/main-layouts/main-layouts.
 import { PageConfigComponent } from './pages/components/page-config/page-config.component';
 import { StoryConfigComponent } from './pages/components/story-config/story-config.component';
 import { CanvasComponent } from './pages/components/canvas/canvas.component';
+import { CreateTouchDialogComponent } from './pages/components/create-touch-dialog/create-touch-dialog.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { CanvasComponent } from './pages/components/canvas/canvas.component';
     MainLayoutsComponent,
     PageConfigComponent,
     StoryConfigComponent,
-    CanvasComponent
+    CanvasComponent,
+    CreateTouchDialogComponent
   ],
   imports: [
     BrowserModule,

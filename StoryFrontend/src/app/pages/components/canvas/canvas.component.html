@@ -1,2 +1,8 @@
-<canvas class="border-2 border-red-200" #myCanvas width="900" height="460" (mousedown)="onCanvasMouseDown($event)">
+<canvas 
+  class="border-2 border-red-200" 
+  #canvasComponent width="900" height="460" 
+  (mousedown)="onCanvasMouseDown($event)"
+  (mousemove)="onCanvasMouseMove($event)"
+  (mouseup)="onCanvasMouseUp()"  
+>
 </canvas>

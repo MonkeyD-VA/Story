@@ -2,23 +2,49 @@
   <button mat-raised-button (click)="goBack()"><mat-icon>arrow_back</mat-icon> Back </button>
   <h1 class="pt-4 relative left-7">Config page</h1>
 </div>
+
 <mat-tab-group>
   <mat-tab *ngFor="let link of links">
     <ng-template mat-tab-label>
       {{ link }}
     </ng-template>
+
     <div class="flex flex-row">
       <!-- Your content for this tab goes here -->
       <div class="flex-initial w-5/6">
-        <app-canvas [imageSource]="pages[links.indexOf(link)].img_background"></app-canvas>
+        <app-canvas #myCanvas [imageSource]="pages[links.indexOf(link)].img_background"></app-canvas>
       </div>
-      <div class="flex-initial w-1/6 flex flex-col items-start">
+      <div>
         <div class="font-medium my-3 text-xl">Config action</div>
-        <button mat-raised-button color="primary" class="m-1" (click)="addRect()">Add</button>
-        <button mat-raised-button class="m-1">Undo</button>
-        <button mat-raised-button color="warn" class="m-1">Clear</button>
+        <div class="flex-initial w-1/6 flex flex-row items-start">
+          <button mat-raised-button class="m-1" (click)="myCanvas.undo()">Undo</button>
+          <button mat-raised-button color="warn" class="m-1" (click)="myCanvas.clear()">Clear</button>
+        </div>
+        <div>
+          <button mat-raised-button class="mb-2" (click)="openDialog()">Add new touch</button>
+          <form>
+            <mat-form-field class="example-full-width">
+              <mat-label>Touch</mat-label>
+              <input type="text" placeholder="Pick touch" aria-label="Touch" matInput [formControl]="myCanvas.myControl"
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of myCanvas.options" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          <h2>Position đang chọn</h2>
+          <div *ngIf="myCanvas.getCurrentShape()">  
+            <button mat-raised-button color="warn" (click)="myCanvas.remove()" class="mb-4">Remove</button><br>
+            <span class="mr-4">X: {{myCanvas.getCurrentShape().x}}</span>
+            <span class="mr-4">Y: {{myCanvas.getCurrentShape().y}}</span> <br>
+            <span class="mr-4">Width: {{myCanvas.getCurrentShape().width}}</span>
+            <span class="mr-4">Height: {{myCanvas.getCurrentShape().height}}</span> <br>
+          </div>
+          <button mat-raised-button color="primary" class="m-1">Save</button>
+        </div>
       </div>
-      
-    </div> 
+    </div>
   </mat-tab>
 </mat-tab-group>
