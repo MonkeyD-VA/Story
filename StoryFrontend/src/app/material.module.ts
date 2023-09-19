@@ -15,6 +15,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const modules = [
   MatSlideToggleModule,
@@ -31,7 +32,8 @@ const modules = [
   MatTabsModule,
   MatAutocompleteModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

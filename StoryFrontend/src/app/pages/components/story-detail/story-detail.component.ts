@@ -30,12 +30,10 @@ export class StoryDetailComponent {
     //get the story id from current route
     const routeParams = this.route.snapshot.paramMap;
     const storyIdFromRoute = Number(routeParams.get('id'));
-
-    this.storyService.getStories().subscribe((response) => {
-      this.story = response.stories;
-
-      //find the story that correspond with the id in route
-      this.story = this.story.find((story: any) => story.story_id === storyIdFromRoute);
+    
+    this.storyService.getStoryById(storyIdFromRoute).subscribe((response) => {
+      this.story = response.data;
+      
     });
 
     this.pageService.getPages().subscribe((response) => {

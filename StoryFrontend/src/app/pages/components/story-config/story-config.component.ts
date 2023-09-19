@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./story-config.component.css']
 })
 export class StoryConfigComponent {
- 
+  
 }

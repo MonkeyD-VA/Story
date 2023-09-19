@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import {CloudinaryModule} from '@cloudinary/ng';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,8 @@ import { CreateTouchDialogComponent } from './pages/components/create-touch-dial
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    CloudinaryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
 import { StoryService } from 'src/app/core/services/story.service';
 
 @Component({
@@ -12,7 +11,13 @@ import { StoryService } from 'src/app/core/services/story.service';
 })
 export class StoryListComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['id', 'thumb', 'name', 'author', 'authorId', 'category', 'actions'];
+  isLoading = false;
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 0;
+  
   dataSource = new MatTableDataSource<any>();
+  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -27,10 +32,13 @@ export class StoryListComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.service.getStories().subscribe((response) => {
-      this.dataSource.data = response.stories;
+    // this.service.getStories().subscribe((response) => {
+    //   console.log('log', response.data);
+      
+    //   this.dataSource.data = response.data.data;
      
-    });
+    // });
+    this.fetchData();
   }
 
   applyFilter(event: Event) {
@@ -40,6 +48,27 @@ export class StoryListComponent implements AfterViewInit, OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  pageChanged(event: PageEvent) {
+    console.log('ev', event);
+    
+    this.currentPage = event.pageIndex; // Update the current page
+    
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.isLoading = true;
+  
+    // Make an API request with the current page and page size
+    this.service.getStories(this.currentPage).subscribe((response) => {
+      this.isLoading = false;
+      this.totalRows = response.data.total;
+      this.dataSource.data = response.data.data;
+      console.log('log', response.data);
+      
+    });
   }
 
 };
