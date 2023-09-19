@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Page\PageRepositoryInterface;
+use App\Repositories\Touch\TouchRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Validator;
 
-class PageController extends Controller
+class TouchController extends Controller
 {
-    public function __construct(PageRepositoryInterface $repo)
+    public function __construct(TouchRepositoryInterface $repo)
     {
         $this->repo = $repo;
     }
@@ -25,9 +26,8 @@ class PageController extends Controller
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'page_id' => 'numeric',
+                    'text_id' => 'numeric',
                 ]
             );
 
@@ -53,9 +53,8 @@ class PageController extends Controller
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'page_id' => 'numeric',
+                    'text_id' => 'numeric',
                 ]
             );
 
@@ -70,4 +69,5 @@ class PageController extends Controller
             return $this->responseJson($th->getMessage(), null, false, 500);
         }
     }
+
 }

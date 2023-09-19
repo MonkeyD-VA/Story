@@ -28,4 +28,9 @@ class Touch extends Model
         return $this->hasOne(Text::class, 'text_id');
     }
 
+    public function positions()
+    {
+        return $this->hasMany(Position::class, 'touch_id');
+    }
+
 }

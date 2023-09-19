@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Page\PageRepositoryInterface;
+use App\Repositories\Position\PositionRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PageController extends Controller
+class PositionController extends Controller
 {
-    public function __construct(PageRepositoryInterface $repo)
+
+    public function __construct(PositionRepositoryInterface $repo)
     {
         $this->repo = $repo;
     }
@@ -25,9 +26,13 @@ class PageController extends Controller
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'touch_id' => 'numeric',
+                    'x' => 'numeric',
+                    'y' => 'numeric',
+                    'width' => 'numeric',
+                    'height' => 'numeric',
+                    'screenX' => 'numeric',
+                    'screenY' => 'numeric',
                 ]
             );
 
@@ -47,15 +52,19 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $this->repo->getDataRequest($request) ;
+        $data = $this->repo->getDataRequest($request);
         try {
             //Validated
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'touch_id' => 'numeric',
+                    'x' => 'numeric',
+                    'y' => 'numeric',
+                    'width' => 'numeric',
+                    'height' => 'numeric',
+                    'screenX' => 'numeric',
+                    'screenY' => 'numeric',
                 ]
             );
 
@@ -70,4 +79,5 @@ class PageController extends Controller
             return $this->responseJson($th->getMessage(), null, false, 500);
         }
     }
+
 }

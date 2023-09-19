@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\TextController;
+use App\Http\Controllers\TouchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+// Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('story')->group(function () {
         Route::get('/', [StoryController::class, 'index']);
         Route::get('detail/{id}', [StoryController::class, 'show']);
@@ -32,10 +35,47 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('page')->group(function () {
         Route::get('/', [PageController::class, 'index']);
-        // Route::get('story/{id}', PageController::class, 'findByStoryId');
+        Route::get('detail/{id}', [PageController::class, 'show']);
+        Route::post('store', [PageController::class, 'store']);
+        Route::patch('update/{id}', [PageController::class, 'update']);
+        Route::delete('delete/{id}', [PageController::class, 'destroy']);
     });
 
-});
+    Route::prefix('text')->group(function () {
+        Route::get('/', [TextController::class, 'index']);
+        Route::get('detail/{id}', [TextController::class, 'show']);
+        Route::post('store', [TextController::class, 'store']);
+        Route::patch('update/{id}', [TextController::class, 'update']);
+        Route::delete('delete/{id}', [TextController::class, 'destroy']);
+    });
+
+    Route::prefix('touch')->group(function () {
+        Route::get('/', [TouchController::class, 'index']);
+        Route::get('detail/{id}', [TouchController::class, 'show']);
+        Route::post('store', [TouchController::class, 'store']);
+        Route::patch('update/{id}', [TouchController::class, 'update']);
+        Route::delete('delete/{id}', [TouchController::class, 'destroy']);
+    });
+
+    // Route::prefix('textConfig')->group(function () {
+    //     Route::get('/', [PageController::class, 'index']);
+    //     Route::get('detail/{id}', [PageController::class, 'show']);
+    //     Route::post('store', [PageController::class, 'store']);
+    //     Route::patch('update/{id}', [PageController::class, 'update']);
+    //     Route::delete('delete/{id}', [PageController::class, 'destroy']);
+    // });
+
+    Route::prefix('position')->group(function () {
+        Route::get('/', [PositionController::class, 'index']);
+        Route::get('detail/{id}', [PositionController::class, 'show']);
+        Route::post('store', [PositionController::class, 'store']);
+        Route::patch('update/{id}', [PositionController::class, 'update']);
+        Route::delete('delete/{id}', [PositionController::class, 'destroy']);
+    });
+
+    
+
+// });
 
 
 

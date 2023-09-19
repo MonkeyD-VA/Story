@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Page\PageRepositoryInterface;
+use App\Repositories\Text\TextRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PageController extends Controller
+class TextController extends Controller
 {
-    public function __construct(PageRepositoryInterface $repo)
+    public function __construct(TextRepositoryInterface $repo)
     {
         $this->repo = $repo;
     }
@@ -25,9 +25,11 @@ class PageController extends Controller
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'text_content' => 'string',
+                    'audio_id' => 'numeric',
+                    'audio_file' => 'string',
+                    'audio_time' => 'numeric',
+                    'text_type' => 'string',
                 ]
             );
 
@@ -53,9 +55,11 @@ class PageController extends Controller
             $validate = Validator::make(
                 $data,
                 [
-                    'page_number' => 'numeric',
-                    'story_id' => 'numeric',
-                    'image_background' => 'string',
+                    'text_content' => 'string',
+                    'audio_id' => 'numeric',
+                    'audio_file' => 'string',
+                    'audio_time' => 'numeric',
+                    'text_type' => 'string',
                 ]
             );
 
@@ -70,4 +74,6 @@ class PageController extends Controller
             return $this->responseJson($th->getMessage(), null, false, 500);
         }
     }
+
+
 }

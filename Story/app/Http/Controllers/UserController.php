@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -32,7 +33,7 @@ class UserController extends Controller
         return "user action";
     }
 
-    public function index()
+    public function index(FacadesRequest $request)
     {
         return response()->json([
             'data' => User::all(),

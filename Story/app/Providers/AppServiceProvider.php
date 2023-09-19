@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Page\PageRepository;
 use App\Repositories\Page\PageRepositoryInterface;
+use App\Repositories\Position\PositionRepository;
+use App\Repositories\Position\PositionRepositoryInterface;
 use App\Repositories\Story\StoryRepository;
 use App\Repositories\Story\StoryRepositoryInterface;
 use App\Repositories\Text\TextRepository;
@@ -26,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TextRepositoryInterface::class, TextRepository::class);
         $this->app->bind(TouchRepositoryInterface::class, TouchRepository::class);
         $this->app->bind(TextConfigRepositoryInterface::class, TextConfigRepository::class);
-        
+        $this->app->bind(PositionRepositoryInterface::class, PositionRepository::class);
     }
 
     /**

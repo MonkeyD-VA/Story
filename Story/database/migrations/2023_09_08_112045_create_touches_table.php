@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('touch_id');
             $table->unsignedBigInteger('page_id');
             $table->unsignedBigInteger('text_id');
-            $table->json('position');
             $table->timestamps();
         });
 

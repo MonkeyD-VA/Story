@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('text_configs', function (Blueprint $table) {
             $table->unsignedBigInteger('text_id');
             $table->unsignedBigInteger('page_id');
-            $table->json('position');
+            $table->unsignedBigInteger('position');
+            $table->string('type');
             $table->timestamps();
         });
 
