@@ -80,4 +80,10 @@ class PositionController extends Controller
         }
     }
 
+    public function getPositionInPage(string $id) {
+        $dataReturn = $this->repo->getPositionInPage($id);
+        return $this->responseJson('get success', $dataReturn);
+
+    }
+
 }

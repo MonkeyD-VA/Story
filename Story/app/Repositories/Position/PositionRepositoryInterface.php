@@ -6,4 +6,5 @@ use Illuminate\Http\Request;
 
 interface PositionRepositoryInterface extends RepositoryInterface
 {
+  public function getPositionInPage(string $id);
 }

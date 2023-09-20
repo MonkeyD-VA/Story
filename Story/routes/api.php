@@ -39,6 +39,7 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::post('store', [PageController::class, 'store']);
         Route::patch('update/{id}', [PageController::class, 'update']);
         Route::delete('delete/{id}', [PageController::class, 'destroy']);
+        Route::get('{story_id}/{page_number}', [PageController::class, 'getAllOfPage']);
     });
 
     Route::prefix('text')->group(function () {
@@ -47,7 +48,6 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::post('store', [TextController::class, 'store']);
         Route::patch('update/{id}', [TextController::class, 'update']);
         Route::delete('delete/{id}', [TextController::class, 'destroy']);
-        Route::get('{story_id}/{page_number}', [TextController::class, 'getTextOfPage']);
     });
 
     Route::prefix('touch')->group(function () {
@@ -72,6 +72,7 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::post('store', [PositionController::class, 'store']);
         Route::patch('update/{id}', [PositionController::class, 'update']);
         Route::delete('delete/{id}', [PositionController::class, 'destroy']);
+        Route::get('page/{id}', [PositionController::class, 'getPositionInPage']);
     });
 
     
