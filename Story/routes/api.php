@@ -47,6 +47,7 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::post('store', [TextController::class, 'store']);
         Route::patch('update/{id}', [TextController::class, 'update']);
         Route::delete('delete/{id}', [TextController::class, 'destroy']);
+        Route::get('{story_id}/{page_number}', [TextController::class, 'getTextOfPage']);
     });
 
     Route::prefix('touch')->group(function () {

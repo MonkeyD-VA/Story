@@ -75,5 +75,30 @@ class TextController extends Controller
         }
     }
 
+    public function getTextOfPage(string $story_id, string $page_number) {
+        try {
+            //Validated
+            $validate = Validator::make(
+                [
+                    'story_id' => $story_id,
+                    'page_number' => $page_number,
+                ],
+                [
+                    'story_id' => 'required|numeric',
+                    'page_number' => 'required|numeric',
+                ]
+            );
+
+            if ($validate->fails()) {
+                return $this->responseJson($validate->error(), null, false, 401);
+            }
+
+            $dataReturn = $this->repo->getTextOfPage($story_id, $page_number);
+            return $this->responseJson('get success', $dataReturn);
+        } catch (\Throwable $th) {
+            return $this->responseJson($th->getMessage(), null, false, 500);
+        }
+    }
+
 
 }
