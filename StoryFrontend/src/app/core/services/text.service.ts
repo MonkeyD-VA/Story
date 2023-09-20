@@ -6,20 +6,22 @@ import { Constants } from '../config/constants';
 @Injectable({
   providedIn: 'root'
 })
-export class PageService {
+export class TextService {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
-  private url = Constants.API_ENDPOINT + 'page';
+  private url = Constants.API_ENDPOINT + 'text';
 
-  getPages(): Observable<any> {
-    return this.http.get<any>(this.url);
+  createText(data: any): Observable<any> {
+    const url = `${this.url}/store`;
+    
+    return this.http.post<any>(url, data);
   }
 
-  getAllOfPage(storyId: number, pageNumber: number): Observable<any> {
+  getTextInPage(storyId: number, pageNumber: number): Observable<any> {
     const url = `${this.url}/${storyId}/${pageNumber}`;    
     return this.http.get<any>(url);
   }
+
+
 }

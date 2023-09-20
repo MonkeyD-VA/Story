@@ -26,4 +26,9 @@ export class StoryService {
     return this.http.get<any>(url);
   }
 
+  getPageOfStory(id: number): Observable<any> {
+    const url = `${this.url}/pageOf/${id}`;
+    return this.http.get<any>(url);
+  }
+
 }

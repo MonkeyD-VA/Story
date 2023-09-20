@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CanvasService } from 'src/app/core/services/canvas.service';
-import { PageService } from 'src/app/core/services/page.service';
 import { CanvasComponent } from '../canvas/canvas.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTouchDialogComponent } from '../create-touch-dialog/create-touch-dialog.component';
+import { StoryService } from 'src/app/core/services/story.service';
 
 @Component({
   selector: 'app-page-config',
@@ -18,7 +18,7 @@ export class PageConfigComponent {
   pages: any | undefined;
 
   constructor(
-    private pageService: PageService,
+    private storyService: StoryService,
     private location: Location,
     private route: ActivatedRoute,
     public dialog: MatDialog
@@ -32,11 +32,9 @@ export class PageConfigComponent {
     const routeParams = this.route.snapshot.paramMap;
     const storyIdFromRoute = Number(routeParams.get('id'));
 
-    this.pageService.getPages().subscribe((response) => {
-      this.pages = response;
+    this.storyService.getPageOfStory(storyIdFromRoute).subscribe((response) => {
+      this.pages = response.data;
 
-      //find the page that correspond with the story
-      this.pages = this.pages.filter((page: any) => page.story_id === storyIdFromRoute);
       //sort follow the page_number
       this.pages.sort((a: any, b: any) => a.page_number - b.page_number);
 

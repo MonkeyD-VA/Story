@@ -3,8 +3,8 @@
   <h1 class="pt-4 relative left-7">Config page</h1>
 </div>
 
-<mat-tab-group>
-  <mat-tab *ngFor="let link of links">
+<mat-tab-group >
+  <mat-tab *ngFor="let link of links; let i = index">
     <ng-template mat-tab-label>
       {{ link }}
     </ng-template>
@@ -12,13 +12,14 @@
     <div class="flex flex-row">
       <!-- Your content for this tab goes here -->
       <div class="flex-initial w-5/6">
-        <app-canvas #myCanvas [imageSource]="pages[links.indexOf(link)].img_background"></app-canvas>
+        <app-canvas #myCanvas [imageSource]="pages[i].image_background" [pageNumber]='i + 1'></app-canvas>
       </div>
       <div>
         <div class="font-medium my-3 text-xl">Config action</div>
         <div class="flex-initial w-1/6 flex flex-row items-start">
           <button mat-raised-button class="m-1" (click)="myCanvas.undo()">Undo</button>
           <button mat-raised-button color="warn" class="m-1" (click)="myCanvas.clear()">Clear</button>
+          <button mat-raised-button color="primary" class="m-1" (click)="myCanvas.loadRect()">Load</button>
         </div>
         <div>
           <button mat-raised-button class="mb-2" (click)="openDialog()">Add new touch</button>

@@ -21,4 +21,9 @@ export class CreateTouchDialogComponent {
       console.error('No audio file selected.');
     }
   }
+
+  createTouch() {
+    
+  }
+
 }

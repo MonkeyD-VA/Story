@@ -1,6 +1,9 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CanvasService } from 'src/app/core/services/canvas.service';
+import { PageService } from 'src/app/core/services/page.service';
+import { PositionService } from 'src/app/core/services/position.service';
 
 @Component({
   selector: 'app-canvas',
@@ -23,10 +26,34 @@ export class CanvasComponent {
   private offsetY: any;
 
   @Input() imageSource!: string;
+  @Input() pageNumber!: number;
+
+  options: string[] = [];
 
   constructor(
-    private canvasService: CanvasService
+    private canvasService: CanvasService,
+    private pageService: PageService,
+    private route: ActivatedRoute,
+    private positionService: PositionService
   ) { }
+
+  ngOnInit(): void {
+    //get the story id from current route
+    const routeParams = this.route.snapshot.paramMap;
+    const storyIdFromRoute = Number(routeParams.get('id'));
+
+    this.pageService.getAllOfPage(storyIdFromRoute, this.pageNumber).subscribe((response) => {
+      this.options = response.data.map((text: any) => text.text_content);
+      
+      if (response.data.length) {
+        const pageId = response.data[0].page_id        
+        this.positionService.getPositionInPage(pageId).subscribe((res) => {
+          console.log('res', res);
+          this.rectangles = res.data;
+        }); 
+      }
+    });
+  }
 
   ngAfterViewInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
@@ -36,13 +63,13 @@ export class CanvasComponent {
 
     //get rectangles source here
 
+
     this.image.onload = () => {
-      this.resizeAndDrawImage();
       this.drawShape();
+    };    
 
-    };
-
-
+    this.rectangles.push({});
+    this.rectangles.pop();
 
   }
 
@@ -174,8 +201,11 @@ export class CanvasComponent {
     }
   }
 
+  loadRect() {
+    this.drawShape();
+  }
+
   myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
 
   getCurrentShape() {
     const current_shape = this.rectangles[this.current_shape_index];
