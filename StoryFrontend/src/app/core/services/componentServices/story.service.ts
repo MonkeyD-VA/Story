@@ -31,4 +31,13 @@ export class StoryService {
     return this.http.get<any>(url);
   }
 
+  updateStory(id: number, storyData: any): Observable<any> {
+    const url = `${this.url}/update/${id}`;
+    return this.http.patch(url, storyData);
+  }
+
+  deleteStory(id: number): Observable<any> {
+    const url = `${this.url}/delete/${id}`;
+    return this.http.delete(url);
+  }
 }

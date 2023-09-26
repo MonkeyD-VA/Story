@@ -1,6 +1,6 @@
 <div class="flex items-center">
   <button mat-raised-button (click)="goBack()"><mat-icon>arrow_back</mat-icon> Back </button>
-  <h1 class="pt-4 relative left-7">{{story.category}}: {{story.story_name}}</h1>
+  <h1 class="pt-4 relative left-7" *ngIf="story" >{{story.category}}: {{story.story_name}}</h1>
   <span class="flex-auto"></span>
   <a mat-raised-button color="primary" routerLink="/story/config"><mat-icon fontIcon="settings"></mat-icon>Config</a>
   <a mat-raised-button color="accent" class="ml-3" [routerLink]="['/story/configPage', story.story_id]" ><mat-icon fontIcon="library_books"></mat-icon> Config page</a>
@@ -15,29 +15,29 @@
         <mat-card-title class="pb-5">Story Information</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form action="">
+        <form>
           <mat-form-field floatLabel="always" class="w-full">
             <mat-label class="text-black">Story name</mat-label>
-            <input matInput placeholder={{story.story_name}}>
+            <input matInput name="story_name" [(ngModel)]="storyForm.story_name">
           </mat-form-field>
 
           <mat-form-field floatLabel="always" class="w-full">
             <mat-label class="text-black">Story ID</mat-label>
-            <input matInput placeholder={{story.story_id}}>
+            <input matInput value={{story.story_id}} name="story_id" [(ngModel)]="storyForm.story_id">
           </mat-form-field>
 
           <mat-form-field floatLabel="always" class="w-full">
             <mat-label class="text-black">Author ID</mat-label>
-            <input matInput placeholder={{story.author_id}}>
+            <input matInput value={{story.author_id}} name="author_id" [(ngModel)]="storyForm.author_id">
           </mat-form-field>
 
           <mat-form-field floatLabel="always" class="w-full">
             <mat-label class="text-black">Author name</mat-label>
-            <input matInput placeholder={{story.author_name}}>
+            <input matInput value={{story.author_name}} name="author_name" [(ngModel)]="storyForm.author_name">
           </mat-form-field>
 
           <div class="flex justify-end">
-            <button mat-raised-button color="primary">Update</button>
+            <button mat-raised-button color="primary" (click)="updateStory()">Update</button>
           </div>
         </form>
       </mat-card-content>

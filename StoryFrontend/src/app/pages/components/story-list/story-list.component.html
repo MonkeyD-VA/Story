@@ -59,7 +59,7 @@
         <a mat-raised-button [routerLink]="['/story/detail', story.story_id]" class="ml-2"><mat-icon
             fontIcon="info"></mat-icon>
         </a>
-        <a mat-raised-button class="ml-2"><mat-icon fontIcon="delete"></mat-icon>
+        <a mat-raised-button class="ml-2" (click)="deleteStory(story.story_id)"><mat-icon fontIcon="delete"></mat-icon>
         </a>
       </td>
     </ng-container>
