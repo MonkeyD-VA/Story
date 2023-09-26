@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CanvasService } from 'src/app/core/services/canvas.service';
-import { PageService } from 'src/app/core/services/page.service';
-import { PositionService } from 'src/app/core/services/position.service';
+import { CanvasService } from 'src/app/core/services/componentServices/canvas.service';
+import { PageService } from 'src/app/core/services/componentServices/page.service';
+import { PositionService } from 'src/app/core/services/componentServices/position.service';
 
 @Component({
   selector: 'app-canvas',

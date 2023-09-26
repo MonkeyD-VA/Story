@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { StoryService } from '../services/story.service';
+import { StoryService } from '../services/componentServices/story.service';
 
 export class StoryComponent {
 

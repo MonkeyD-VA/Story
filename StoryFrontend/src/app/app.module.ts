@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoryListComponent } from './pages/components/story-list/story-list.component';
 
 import { MaterialModule } from './material.module';
@@ -46,7 +46,8 @@ import { CreateTouchDialogComponent } from './pages/components/create-touch-dial
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
-    CloudinaryModule
+    CloudinaryModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

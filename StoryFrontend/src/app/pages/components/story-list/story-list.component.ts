@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { StoryService } from 'src/app/core/services/story.service';
+import { StoryService } from 'src/app/core/services/componentServices/story.service';
 
 @Component({
   selector: 'app-story-list',

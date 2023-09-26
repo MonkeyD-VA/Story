@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Story, stories } from '../../story';
 import { Location } from '@angular/common';
-import { StoryService } from 'src/app/core/services/story.service';
-import { PageService } from 'src/app/core/services/page.service';
+import { StoryService } from 'src/app/core/services/componentServices/story.service';
+import { PageService } from 'src/app/core/services/componentServices/page.service';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -36,20 +36,13 @@ export class StoryDetailComponent {
       
     });
 
-    this.pageService.getPages().subscribe((response) => {
-      this.pages = response;
+    this.pageService.getPages().subscribe((response) => {      
+      this.pages = response.data.data;
 
-      //find the page that correspond with the story
-      this.pages = this.pages.filter((page: any) => page.story_id === storyIdFromRoute);
-      //sort follow the page_number
-      this.pages.sort((a: any, b: any) => a.page_number - b.page_number);
-      
+      this.pages.sort((a: any, b: any) => a.page_number - b.page_number);      
       this.dataSource.data = this.pages;
 
     });
-
-    
-    
   }
 
   goBack(): void {

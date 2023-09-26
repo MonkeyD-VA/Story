@@ -1,11 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CanvasService } from 'src/app/core/services/canvas.service';
+import { CanvasService } from 'src/app/core/services/componentServices/canvas.service';
 import { CanvasComponent } from '../canvas/canvas.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTouchDialogComponent } from '../create-touch-dialog/create-touch-dialog.component';
-import { StoryService } from 'src/app/core/services/story.service';
+import { StoryService } from 'src/app/core/services/componentServices/story.service';
 
 @Component({
   selector: 'app-page-config',
