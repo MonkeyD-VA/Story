@@ -33,7 +33,7 @@ class UserController extends Controller
         return "user action";
     }
 
-    public function index(FacadesRequest $request)
+    public function index(Request $request)
     {
         return response()->json([
             'data' => User::all(),
