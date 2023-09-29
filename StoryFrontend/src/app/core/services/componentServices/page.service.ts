@@ -15,11 +15,11 @@ export class PageService {
   private url = Constants.API_ENDPOINT + 'page';
 
   getPages(): Observable<any> {
-    return this.http.get<any>(this.url);
+    return this.http.get<any>(this.url, Constants.options);
   }
 
   getAllOfPage(storyId: number, pageNumber: number): Observable<any> {
     const url = `${this.url}/${storyId}/${pageNumber}`;    
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, Constants.options);
   }
 }

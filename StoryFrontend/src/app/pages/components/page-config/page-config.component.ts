@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CanvasService } from 'src/app/core/services/componentServices/canvas.service';
 import { CanvasComponent } from '../canvas/canvas.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreateTouchDialogComponent } from '../create-touch-dialog/create-touch-dialog.component';
 import { StoryService } from 'src/app/core/services/componentServices/story.service';
 
@@ -54,14 +54,6 @@ export class PageConfigComponent {
 
   addLink() {
     this.links.push(`Page ${this.links.length + 1}`);
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(CreateTouchDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
 }

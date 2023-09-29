@@ -1,21 +1,24 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { CanvasService } from 'src/app/core/services/componentServices/canvas.service';
 import { PageService } from 'src/app/core/services/componentServices/page.service';
 import { PositionService } from 'src/app/core/services/componentServices/position.service';
+import { TextService } from 'src/app/core/services/componentServices/text.service';
+import { CreateTouchDialogComponent } from '../create-touch-dialog/create-touch-dialog.component';
+import { DialogConfig } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
-  styleUrls: ['./canvas.component.css']
+  styleUrls: ['./canvas.component.css'],
 })
 export class CanvasComponent {
   @ViewChild('canvasComponent') canvas!: ElementRef;
   private ctx!: CanvasRenderingContext2D;
   private image!: HTMLImageElement;
 
-  private rectangles: any[] = [];
+  private positions: any[] = [];
   private current_shape_index: any;
   private is_dragging = false;
   private is_drawing = false;
@@ -24,35 +27,57 @@ export class CanvasComponent {
   private startY: any;
   private offsetX: any;
   private offsetY: any;
+  private screenX: any;
+  private screenY: any;
 
   @Input() imageSource!: string;
   @Input() pageNumber!: number;
 
   options: string[] = [];
+  selectedOption!: string;
+  selectedTextId!: number;
+
+  private touches: any[] = [];
+  private pageId!: number;
 
   constructor(
-    private canvasService: CanvasService,
+    private textService: TextService,
     private pageService: PageService,
     private route: ActivatedRoute,
-    private positionService: PositionService
-  ) { }
+    private positionService: PositionService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     //get the story id from current route
     const routeParams = this.route.snapshot.paramMap;
     const storyIdFromRoute = Number(routeParams.get('id'));
 
-    this.pageService.getAllOfPage(storyIdFromRoute, this.pageNumber).subscribe((response) => {
-      this.options = response.data.map((text: any) => text.text_content);
-      
-      if (response.data.length) {
-        const pageId = response.data[0].page_id        
-        this.positionService.getPositionInPage(pageId).subscribe((res) => {
-          console.log('res', res);
-          this.rectangles = res.data;
-        }); 
-      }
+    //get text data to options
+    this.textService.getAll().subscribe((response) => {
+      this.options = response.data.data;
     });
+
+    this.pageService
+      .getAllOfPage(storyIdFromRoute, this.pageNumber)
+      .subscribe((response) => {
+        //get data position in database
+        if (response.data.length) {
+          this.pageId = response.data[0].page_id;
+          this.positionService
+            .getPositionInPage(this.pageId)
+            .subscribe((res) => {
+              this.positions = res.data.positions;
+              if (res.data.positions) {
+                this.touches.push({
+                  positions: this.positions,
+                  page_id: res.data.page_id,
+                  text_id: res.data.text_id,
+                });
+              }
+            });
+        }
+      });
   }
 
   ngAfterViewInit() {
@@ -61,16 +86,11 @@ export class CanvasComponent {
     this.image = new Image();
     this.image.src = this.imageSource;
 
-    //get rectangles source here
-
+    //get positions source here
 
     this.image.onload = () => {
       this.drawShape();
-    };    
-
-    this.rectangles.push({});
-    this.rectangles.pop();
-
+    };
   }
 
   resizeAndDrawImage() {
@@ -83,20 +103,24 @@ export class CanvasComponent {
     const scaleFactor = Math.min(scaleWidth, scaleHeight);
 
     // Calculate the new dimensions
-    const newWidth = this.image.width * scaleFactor;
-    const newHeight = this.image.height * scaleFactor;
+    this.screenX = this.image.width * scaleFactor;
+    this.screenY = this.image.height * scaleFactor;
 
     // Clear the canvas
-    this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+    this.ctx.clearRect(
+      0,
+      0,
+      this.canvas.nativeElement.width,
+      this.canvas.nativeElement.height
+    );
 
     // Draw the resized image
-    this.ctx.drawImage(this.image, 0, 0, newWidth, newHeight);
-
+    this.ctx.drawImage(this.image, 0, 0, this.screenX, this.screenY);
   }
 
   drawShape() {
     this.resizeAndDrawImage();
-    this.rectangles.forEach(rect => {
+    this.positions.forEach((rect) => {
       this.ctx.strokeStyle = 'red';
       this.ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
     });
@@ -107,7 +131,7 @@ export class CanvasComponent {
     this.startY = event.offsetY;
 
     let index = 0;
-    this.rectangles.forEach(rect => {
+    this.positions.forEach((rect) => {
       if (this.isMouseInShape(this.startX, this.startY, rect)) {
         this.current_shape_index = index;
         this.is_dragging = true;
@@ -119,8 +143,6 @@ export class CanvasComponent {
     if (!this.is_dragging) {
       this.is_drawing = true;
     }
-
-
   }
 
   onCanvasMouseMove(event: MouseEvent) {
@@ -128,19 +150,22 @@ export class CanvasComponent {
     this.offsetY = event.offsetY;
 
     if (this.is_drawing) {
-      this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+      this.ctx.clearRect(
+        0,
+        0,
+        this.canvas.nativeElement.width,
+        this.canvas.nativeElement.height
+      );
       this.drawShape();
 
       const width = this.offsetX - this.startX;
       const height = this.offsetY - this.startY;
       this.ctx.strokeRect(this.startX, this.startY, width, height);
-
     } else if (this.is_dragging) {
-
       const dx = this.offsetX - this.startX;
       const dy = this.offsetY - this.startY;
 
-      const current_shape = this.rectangles[this.current_shape_index];
+      const current_shape = this.positions[this.current_shape_index];
       current_shape.x += dx;
       current_shape.y += dy;
 
@@ -155,21 +180,23 @@ export class CanvasComponent {
     if (!this.is_dragging && !this.is_drawing) {
       return;
     }
-    if (this.is_drawing && this.offsetX - this.startX != 0 && this.offsetY - this.startY != 0) {
-      this.rectangles.push({ x: this.startX, y: this.startY, width: Math.abs(this.offsetX - this.startX), height: Math.abs(this.offsetY - this.startY) });
-      console.log(this.rectangles);
-      this.current_shape_index = this.rectangles.length - 1;
+    if (
+      this.is_drawing &&
+      this.offsetX - this.startX != 0 &&
+      this.offsetY - this.startY != 0
+    ) {
+      this.positions.push({
+        x: this.startX,
+        y: this.startY,
+        width: Math.abs(this.offsetX - this.startX),
+        height: Math.abs(this.offsetY - this.startY),
+      });
+      this.current_shape_index = this.positions.length - 1;
       this.drawShape();
+      this.openDialog();
     }
     this.is_dragging = false;
     this.is_drawing = false;
-
-    const current_shape = this.rectangles[this.current_shape_index];
-    if (current_shape) {
-      console.log(current_shape.x, current_shape.y, current_shape.width, current_shape.height);
-    }
-
-
   }
 
   isMouseInShape(x: Number, y: Number, shape: any) {
@@ -185,20 +212,31 @@ export class CanvasComponent {
   }
 
   undo() {
-    this.rectangles.pop();
+    this.positions.pop();
     this.drawShape();
   }
 
   clear() {
-    this.rectangles = [];
+    this.positions = [];
     this.drawShape();
   }
 
   remove() {
-    if (this.current_shape_index >= 0 && this.current_shape_index < this.rectangles.length) {
-      this.rectangles.splice(this.current_shape_index, 1);
+    if (
+      this.current_shape_index >= 0 &&
+      this.current_shape_index < this.positions.length
+    ) {
+      this.positions.splice(this.current_shape_index, 1);
       this.drawShape();
     }
+  }
+
+  save() {
+    this.positionService
+      .createPositionByTouch(this.touches)
+      .subscribe((response) => {
+        alert('Update success');
+      });
   }
 
   loadRect() {
@@ -208,10 +246,28 @@ export class CanvasComponent {
   myControl = new FormControl('');
 
   getCurrentShape() {
-    const current_shape = this.rectangles[this.current_shape_index];
-    if (current_shape) return current_shape;
+    const current_shape = this.positions[this.current_shape_index];
+    if (current_shape) {
+      if (current_shape.text_content) {
+        this.selectedOption = current_shape.text_content;
+      } else {
+      }
+      return current_shape;
+    }
     return null;
   }
 
-
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateTouchDialogComponent, {
+      data: {
+        x: this.startX,
+        y: this.startY,
+        width: Math.abs(this.offsetX - this.startX),
+        height: Math.abs(this.offsetY - this.startY),
+        screenX: this.screenX,
+        screenY: this.screenY,
+        page_id: this.pageId,
+      },
+    });
+  }
 }

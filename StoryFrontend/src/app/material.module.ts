@@ -16,6 +16,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSelectModule} from '@angular/material/select';
 
 const modules = [
   MatSlideToggleModule,
@@ -33,7 +34,8 @@ const modules = [
   MatAutocompleteModule,
   MatListModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSelectModule
 ];
 
 @NgModule({

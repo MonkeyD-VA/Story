@@ -14,7 +14,7 @@ export class TouchService {
 
   getTouchInPage(pageNumber: number): Observable<any> {
     // const url = `${this.url}/detail/${pageNumber}`;
-    return this.http.get<any>(this.url);
+    return this.http.get<any>(this.url, Constants.options);
   }
 
 }

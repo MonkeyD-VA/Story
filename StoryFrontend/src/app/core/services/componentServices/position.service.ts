@@ -14,8 +14,17 @@ export class PositionService {
 
   getPositionInPage(pageId: any): Observable<any> {
     const url = `${this.url}/page/${pageId}`;
-    
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, Constants.options);
+  }
+
+  createPositionByTouch(data: any) {
+    const url = `${this.url}/create`;
+    return this.http.post<any>(url, data, Constants.options);
+  }
+  
+  createPositionWithText(data: any) {    
+    const url = `${this.url}/createWithNewText`;
+    return this.http.post<any>(url, data, Constants.options);
   }
 
 }
