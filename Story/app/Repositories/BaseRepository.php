@@ -21,9 +21,9 @@ abstract class BaseRepository implements RepositoryInterface
         $result = [];
         $data = $request->all();
         foreach($data as $key => $value) {
-            if (Schema::hasColumn($this->model->getTable(), $key)) {
+            // if (Schema::hasColumn($this->model->getTable(), $key)) {
                 $result[$key] = $value;
-            }
+            // }
         }
         return $result;
     }
@@ -55,7 +55,8 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function store($attributes = [])
     {
-        return $this->model->create($attributes);
+        $new = $this->model->create($attributes);
+        return $new;
     }
 
     public function update($id, $attributes = [])

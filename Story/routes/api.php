@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [UserController::class, 'createUser']);
 Route::post('/auth/login', [UserController::class, 'loginUser']);
 
-// Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('story')->group(function () {
         Route::get('/', [StoryController::class, 'index']);
         Route::get('detail/{id}', [StoryController::class, 'show']);
@@ -48,6 +48,7 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::post('store', [TextController::class, 'store']);
         Route::patch('update/{id}', [TextController::class, 'update']);
         Route::delete('delete/{id}', [TextController::class, 'destroy']);
+        Route::post('createByList', [TextController::class, 'updateTextInList']);
     });
 
     Route::prefix('touch')->group(function () {
@@ -73,12 +74,11 @@ Route::post('/auth/login', [UserController::class, 'loginUser']);
         Route::patch('update/{id}', [PositionController::class, 'update']);
         Route::delete('delete/{id}', [PositionController::class, 'destroy']);
         Route::get('page/{id}', [PositionController::class, 'getPositionInPage']);
+        Route::post('create', [PositionController::class, 'createPositionByTouch']);
+        Route::post('createWithNewText', [PositionController::class, 'createWithNewText']);
     });
 
     
 
-// });
+});
 
-
-
-// Route::get('logout', [UserController::class, 'logout']);

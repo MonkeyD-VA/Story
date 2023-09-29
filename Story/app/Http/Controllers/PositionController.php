@@ -86,4 +86,16 @@ class PositionController extends Controller
 
     }
 
+    public function createPositionByTouch(Request $request) {
+        $data = $this->repo->getDataRequest($request);
+        $this->repo->createPositionByTouch($data);
+        return $this->responseJson('create success');
+    }
+
+    public function createWithNewText(Request $request) {
+        $data = $this->repo->getDataRequest($request);
+        $dataReturn = $this->repo->createWithNewText($data);
+        return $this->responseJson('create success', $dataReturn);
+    }
+
 }

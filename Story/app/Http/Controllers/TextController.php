@@ -37,8 +37,8 @@ class TextController extends Controller
                 return $this->responseJson($validate->error(), null, false, 401);
             }
 
-            $this->repo->store($data);
-            return $this->responseJson('store success', $data);
+            $dataReturn = $this->repo->store($data);
+            return $this->responseJson('store success', $dataReturn);
         } catch (\Throwable $th) {
             return $this->responseJson($th->getMessage(), null, false, 500);
         }
@@ -73,6 +73,13 @@ class TextController extends Controller
         } catch (\Throwable $th) {
             return $this->responseJson($th->getMessage(), null, false, 500);
         }
+    }
+
+    public function updateTextInList(Request $request)
+    {
+        $data = $this->repo->getDataRequest($request) ;
+        $dataReturn = $this->repo->updateTextInList($data);
+        return $this->responseJson('update and create success', $dataReturn);
     }
 
 

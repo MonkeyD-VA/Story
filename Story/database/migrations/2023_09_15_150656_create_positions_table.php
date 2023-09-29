@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('y');
             $table->integer('width');
             $table->integer('height');
-            $table->integer('screenX');
-            $table->integer('screenY');
+            $table->integer('screenX')->nullable();
+            $table->integer('screenY')->nullable();
             $table->timestamps();
         });
 
